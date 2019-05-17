@@ -1,7 +1,8 @@
+import { ApiProvider } from './../../providers/api/api';
 import { TabsPage } from './../tabs/tabs';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController,  } from 'ionic-angular';
-
+import { IonicPage, NavController, NavParams} from 'ionic-angular';
+import swal from 'sweetalert';
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -15,21 +16,25 @@ export class LoginPage {
 
   constructor(
     public navCtrl: NavController,
-    public toastCtrl: ToastController, 
+    public api: ApiProvider,
     public navParams: NavParams) {
   }
   
   login(){
     if(this.user.email == '' || this.user.senha == ''){
-      const toast = this.toastCtrl.create({
-        message: 'Por favor verifique campos obrigatorios',
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
+      swal({ title: "Atenção", text: "Campos obrigatorios não preenchidos", icon: "warning" });
     }else{
-      localStorage.setItem("usuario", JSON.stringify(this.user));
-      this.navCtrl.setRoot(TabsPage, null, { animate: true, animation: 'transition', duration: 1000, direction: 'forward' })
+      this.api.login(this.user).then((res:any) =>{
+        if(res){
+          localStorage.setItem("usuario", JSON.stringify(res));
+          this.navCtrl.setRoot(TabsPage, null, { animate: true, animation: 'transition', duration: 1000, direction: 'forward' })
+        }
+        else{
+          swal({ title: "Atenção", text: "Verifique seu login e senha", icon: "error" });
+        }
+      }).catch(() =>{
+        swal({ title: "Atenção", text: "Verifique seu login e senha", icon: "error" });
+      })
     }
   }
 

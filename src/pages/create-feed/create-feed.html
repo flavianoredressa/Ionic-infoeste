@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Criar</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-card margin-top margin-bottom (click)="getImage()">
+    <img [src]="feed.thumbmail">
+  </ion-card>
+  <label>Descrição</label>
+  <ion-textarea rows="5" class="border" [(ngModel)]="feed.descricao" >
+  </ion-textarea>
+  <hr class="margin-btn" />
+  <button block ion-button outline (click)="addFeed()" class="button" [disabled]='feed.descricao.length == 5'>Salvar</button>
+  <hr />
+</ion-content>
+<input type="file" #fileInput style="visibility: hidden; height: 0px" name="files[]" (change)="processWebImage($event)">

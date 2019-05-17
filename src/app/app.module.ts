@@ -11,6 +11,10 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CameraProvider } from '../providers/camera/camera';
+import { Camera } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { ApiProvider } from '../providers/api/api';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,9 +26,11 @@ import { CameraProvider } from '../providers/camera/camera';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp,{
       backButtonText: '',
       backButtonIcon:'md-arrow-back',
+      // tabsPlacement: 'top',
     })
   ],
   bootstrap: [IonicApp],
@@ -39,7 +45,10 @@ import { CameraProvider } from '../providers/camera/camera';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    CameraProvider
+    CameraProvider,
+    Camera,
+    ImagePicker,
+    ApiProvider,
   ]
 })
 export class AppModule {}

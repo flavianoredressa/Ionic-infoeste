@@ -1,4 +1,4 @@
-import { AboutPage } from './../about/about';
+import { ApiProvider } from './../../providers/api/api';
 import { Component } from '@angular/core';
 import { NavController, App } from 'ionic-angular';
 
@@ -9,30 +9,33 @@ import { NavController, App } from 'ionic-angular';
 })
 export class HomePage {
   feeds = [];
-  i = 1
+
   constructor(
     public navCtrl: NavController,
-    public app : App
+    public app : App,
+    public Api: ApiProvider,
     ) {
-    this.getFeeds(null)
+    this.getFeeds()
+    
   }
-  getFeeds(infiniteScroll){
-    if(this.feeds.length < 49){
-      for (let index = 0; index < 10; index++) {
-        this.feeds.push(
-          {thumbmail:'https://via.placeholder.com/400x300', 
-          descricao:'Lorem ipsum dolor sit amet, consectetur', 
-          data: (index + 1) +  '/05/2019'})
-      }
-      console.log("Passou" + this.i)
-      this.i++;
-    }
-
-    if(infiniteScroll){
-      infiniteScroll.complete();
-    }
+  getFeeds(){
+    this.Api.getMeusFeeds().then((res:any) =>{
+      res.forEach(element => {
+        let fedd = {thumbmail: element.thumbmail, descricao: element.descricao.substring(0,260), data: element.data}
+        this.feeds.push(fedd)
+      });
+    })
+  }
+  getModeFedd(infiniteScroll){
+    this.Api.getFeeds().then((res:any)=>{
+      res.forEach(element => {
+        let fedd = {thumbmail: element.urlToImage, descricao: element.content.substring(0,260), data: element.publishedAt}
+        this.feeds.push(fedd)
+      });
+    })
+    infiniteScroll.complete();
   }
   addFeed(){
-    this.app.getRootNav().push(AboutPage, null, { animate: true, animation: 'transition', duration: 1000, direction: 'forward' })
+    this.app.getRootNav().push("CreateFeedPage", null, { animate: true, animation: 'transition', duration: 1000, direction: 'forward' })
   }
 }
