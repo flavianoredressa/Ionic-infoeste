@@ -1,1 +1,1 @@
-### :point_right: This starter repo has moved to the [ionic-team/starters](https://github.com/ionic-team/starters/tree/master/ionic-angular/official/tabs) repo! :point_left:
+### :point_right: Este repositorio foir criado para  versionamento de codigo do Curso de Ionic 3 que ministrei na Infoeste promovido pela Unoeste.
