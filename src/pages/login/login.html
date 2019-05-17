@@ -1,0 +1,20 @@
+<ion-content padding class="fundo">
+  <ion-row>
+    <ion-col text-center class="margin-logo">
+      <img class="logo"
+        src="https://raw.githubusercontent.com/yannbf/ionic3-components/master/src/assets/img/logo/logo-mailchimp.png" />
+    </ion-col>
+  </ion-row>
+  <ion-list>
+    <ion-item class="transparent" no-padding>
+      <ion-label floating>Email</ion-label>
+      <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+    </ion-item>
+    <ion-item class="transparent" no-padding>
+      <ion-input type="password" [(ngModel)]="user.senha"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-row class="margin-btn">
+    <button color="light" ion-button block round outline (click)="login()">entrar</button>
+  </ion-row>
+</ion-content>
