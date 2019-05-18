@@ -2,7 +2,7 @@ import { ApiProvider } from './../../providers/api/api';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ActionSheetController } from 'ionic-angular';
 import { CameraProvider } from '../../providers/camera/camera';
-
+import swal from 'sweetalert';
 
 @IonicPage()
 @Component({
@@ -62,6 +62,17 @@ export class CreateFeedPage {
     })
   }
   addFeed(){
-      this.Api.AddFeed(this.feed);
+    if(this.feed.thumbmail == "assets/imgs/img-placeholder.png" || this.feed.descricao == ''){
+      swal({ title: "Atenção", text: "Campos Obrigatorios", icon: "error" });
+    }else{
+      this.Api.AddFeed(this.feed).then(()=>{
+        this.feed.data =''
+        this.feed.thumbmail = 'assets/imgs/img-placeholder.png'
+        this.feed.descricao = ''
+        swal({ title: "OK", text: "Top Top Top", icon: "success" });
+      }).catch(() =>{
+        swal({ title: "Opss", text: "Algo aconteceu", icon: "error" });
+      })
+    }
   }
 }

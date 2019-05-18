@@ -19,9 +19,10 @@ export class HomePage {
     
   }
   getFeeds(){
+    this.feeds = [];
     this.Api.getMeusFeeds().then((res:any) =>{
       res.forEach(element => {
-        let fedd = {thumbmail: element.thumbmail, descricao: element.descricao.substring(0,260), data: element.data}
+        let fedd = {thumbmail: element.thumbmail, descricao: element.descricao, data: element.data}
         this.feeds.push(fedd)
       });
     })
@@ -29,7 +30,7 @@ export class HomePage {
   getModeFedd(infiniteScroll){
     this.Api.getFeeds().then((res:any)=>{
       res.forEach(element => {
-        let fedd = {thumbmail: element.urlToImage, descricao: element.content.substring(0,260), data: element.publishedAt}
+        let fedd = {thumbmail: element.urlToImage, descricao: element.content, data: element.publishedAt}
         this.feeds.push(fedd)
       });
     })
@@ -38,4 +39,14 @@ export class HomePage {
   addFeed(){
     this.app.getRootNav().push("CreateFeedPage", null, { animate: true, animation: 'transition', duration: 1000, direction: 'forward' })
   }
+
+  doRefresh(refresher) {
+    setTimeout(() => {
+      this.getFeeds();
+      refresher.complete();
+    }, 2000);
+  }
+
+
+
 }

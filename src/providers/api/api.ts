@@ -4,9 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ApiProvider {
 
-  constructor(public http: HttpClient) {
-   
-  }
+  constructor(public http: HttpClient) {} 
   getMeusFeeds(){
     return new Promise ((resolve, reject) =>{
       this.http.get("https://5cdc5827069eb30014202d28.mockapi.io/infoeste/feed").toPromise()
@@ -29,7 +27,7 @@ export class ApiProvider {
   }
   AddFeed(feed){
     return new Promise ((resolve, reject) =>{
-      this.http.post("https://5cdc5827069eb30014202d28.mockapi.io/infoeste/feed", feed).toPromise()
+      this.http.post("https://5cdc5827069eb30014202d28.mockapi.io/infoeste/feed/", feed).toPromise()
       .then((res:any)=>{
         resolve()
       }).catch(() => {
