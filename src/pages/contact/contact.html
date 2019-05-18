@@ -22,7 +22,6 @@
       <div id="profile-info" padding>
         <img id="profile-image" [src]="user.avatar" (click)="trocarAvatar()" >
         <h3 id="profile-name">{{user.nome}}</h3>
-        <p>{{user.ocupacao}} &bull; {{user.cidade}}</p>
       </div>
       <hr class="margin-btn" />
       <button block ion-button  color="light" outline (click)="showConfirm()"  >Sair</button>

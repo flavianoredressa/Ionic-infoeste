@@ -1,3 +1,4 @@
+import { ApiProvider } from './../../providers/api/api';
 import { Component, ViewChild } from '@angular/core';
 import { NavController, App, Events, ActionSheetController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
@@ -8,15 +9,19 @@ import { CameraProvider } from '../../providers/camera/camera';
 })
 export class ContactPage {
   @ViewChild('fileInput') fileInput;
-  user = {avatar:'assets/imgs/avatar.png', nome:'Flaviano Redressa', ocupacao:'Desenvolvedor', cidade:'Presidente Prudente/SP' }
+  user = {id: '', nome: '', avatar: '', email: '', senha: ''}
 
   constructor(
     public app: App,
     private events: Events,
+    private api: ApiProvider,
     protected actionSheetCtrl: ActionSheetController,
     protected _Camera: CameraProvider,
     public alertCtrl: AlertController,
     public navCtrl: NavController) {
+
+      this.user = JSON.parse(localStorage.getItem('usuario'))
+      // this.user = this.user[0];
   }
 
   trocarAvatar(){
@@ -27,6 +32,7 @@ export class ContactPage {
           text: 'Camera', handler: () => {
             this._Camera.getPicture('Camera', 400).then((res: any) => {
               this.user.avatar = res;
+              this.api.salvarUser(this.user)
             }).catch(() => { this.fileInput.nativeElement.click(); })
           }
         },
@@ -34,6 +40,7 @@ export class ContactPage {
           text: 'Galeria', handler: () => {
             this._Camera.getPicture('FotoPerfil', 400).then((res: any) => {
               this.user.avatar = res
+              this.api.salvarUser(this.user)
             }).catch(() => { this.fileInput.nativeElement.click(); })
           }
         },
@@ -73,6 +80,7 @@ export class ContactPage {
         let imageData = (readerEvent.target as any).result;
         this._Camera.qualidade(imageData, 400, data => {
           this.user.avatar = data
+          this.api.salvarUser(this.user)
           resolve(data)
         })
       };

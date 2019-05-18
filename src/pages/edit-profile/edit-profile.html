@@ -5,5 +5,11 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-
+    <ion-item>
+        <ion-label floating>Nome</ion-label>
+        <ion-input type="text" [(ngModel)]="user.nome"  ></ion-input>
+      </ion-item>
+      <hr class="margin-btn" />
+      <button block ion-button  outline (click)="salvar()"  >Salvar</button>
+      <hr/>
 </ion-content>

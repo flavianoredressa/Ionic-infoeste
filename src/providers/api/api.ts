@@ -50,4 +50,15 @@ export class ApiProvider {
       })
     })
   }
+  salvarUser(user){
+    return new Promise ((resolve, reject) =>{
+      this.http.put('https://5cdc5827069eb30014202d28.mockapi.io/infoeste/usuario/'+user.id  , user).toPromise()
+      .then((res:any)=>{
+        localStorage.setItem("usuario", JSON.stringify(res));
+        resolve(true)
+      }).catch(() => {
+        reject(false)
+      })
+    })
+  }
 }

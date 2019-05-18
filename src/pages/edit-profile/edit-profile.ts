@@ -1,13 +1,7 @@
+import { ApiProvider } from './../../providers/api/api';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the EditProfilePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
+import swal from 'sweetalert';
 @IonicPage()
 @Component({
   selector: 'page-edit-profile',
@@ -15,11 +9,33 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EditProfilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+  user = {id: '', nome: '', avatar: '', email: '', senha: ''}
+
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public api: ApiProvider) {
+
+
+    this.user = JSON.parse(localStorage.getItem('usuario'))
+    // this.user = this.user[0];
+
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad EditProfilePage');
+
+  }
+
+  salvar(){
+    this.api.salvarUser(this.user).then((res)=>{
+      if(res == true){
+        swal({ title: "OK", text: "Top da balada", icon: "success" });
+      }else{
+        swal({ title: "Ops", text: "Algo Errado", icon: "error" });
+      }
+    }).catch(() =>{
+      swal({ title: "Ops", text: "Algo Errado", icon: "error" });
+    })
   }
 
 }
