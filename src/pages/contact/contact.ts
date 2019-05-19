@@ -21,7 +21,6 @@ export class ContactPage {
     public navCtrl: NavController) {
 
       this.user = JSON.parse(localStorage.getItem('usuario'))
-      // this.user = this.user[0];
   }
 
   trocarAvatar(){

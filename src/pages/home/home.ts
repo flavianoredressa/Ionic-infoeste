@@ -25,6 +25,7 @@ export class HomePage {
         let fedd = {thumbmail: element.thumbmail, descricao: element.descricao, data: element.data}
         this.feeds.push(fedd)
       });
+      this.feeds.reverse();
     })
   }
   getModeFedd(infiniteScroll){
